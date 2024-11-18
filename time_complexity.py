@@ -3,8 +3,19 @@ import math
 import itertools
 import time
 
+# time complexity + execution time results 
+
 # Jobs with their respective processing times
-jobs = [4, 8, 10, 12, 15, 18, 20, 22]
+
+# jobs = [0, 1, 2, 3, 4]
+# jobs = [0, 1, 2, 3, 4, 5]
+# jobs = [0, 1, 2, 3, 4, 5, 6]
+# jobs = [0, 1, 2, 3, 4, 5, 6, 7]
+# jobs = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+# jobs = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+# jobs = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+jobs = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+# jobs = [4, 8, 10, 12, 15, 18, 20, 22]
 
 # Function to calculate the total completion time of a schedule
 def calculate_completion_time(schedule):
@@ -97,24 +108,31 @@ def main():
     print("Jobs:", jobs)
     
     # Brute Force Approach
-    start_time = time.time()
+    start_time = time.perf_counter() # to get higher precision
     bf_schedule, bf_time = brute_force_schedule(jobs)
-    bf_duration = time.time() - start_time
-    bf_duration_ns = bf_duration * 1e9  # Convert to nanoseconds
+    bf_duration = (time.perf_counter() - start_time) * 1e9 # converting results to nanoseconds
+
+    # to prevent 0.0 nanoseconds results 
+    bf_duration_ns = max(bf_duration, 1.0) #1.0 is implemented here to prevent from resulting in 0.0, results will never be less than 1.0 nanoseconds
     print("\nBrute Force Schedule:", bf_schedule)
     print("Total Completion Time (Brute Force):", bf_time)
     print("Execution Time (Brute Force):", bf_duration_ns, "nanoseconds")
     print("Expected Time Complexity: O(n!) =", math.factorial(len(jobs)), "operations")
 
+
     # Simulated Annealing Approach
-    start_time = time.time()
+    start_time = time.perf_counter()
     sa_schedule, sa_time = simulated_annealing(jobs)
-    sa_duration = time.time() - start_time
-    sa_duration_ns = sa_duration * 1e9  # Convert to nanoseconds
+    sa_duration = (time.perf_counter() - start_time) * 1e9  # Convert to nanoseconds
+    
+    # to prevent 0.0 nanoseconds results 
+    
+    sa_duration_ns = max(sa_duration, 1.0)
     print("\nSimulated Annealing Schedule:", sa_schedule)
     print("Total Completion Time (Simulated Annealing):", sa_time)
     print("Execution Time (Simulated Annealing):", sa_duration_ns, "nanoseconds")
     print("Expected Time Complexity: O(max_iterations * n) =", 1000 * len(jobs), "operations")
+    print(" ")
 
 
 
